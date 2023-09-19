@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" type="module" defer></script>
+
+    <title>Integrador</title>
+</head>
+
+<body class="container-fluid">
+    <section class="container-fluid text-light mt-2 p-4 text-center">
+        <h1>Juego de preguntas y respuetas</h1>
+        <h3 class="text-center">¡Bienvenido a este divertido Juego!</h3>
+    </section>
+    <section class="container-fluid mt-5" id="instruccion" style="display: inline">
+        <div class="container-fluid mt-5">
+
+            <h1 class="display-1 text-center border rounded p-2">Instrucciones</h1>
+            <p class="lead fw-medium">El juego se basa en un juego de preguntas y
+                respuestas.</p>
+            <p class="lead fw-medium">Para jugar, solo debes contestar las
+                preguntas haciendo click en las opciones correspondientes.</p>
+            <p class="lead fw-medium">Te tocarán preguntas al azar o
+                puedes elegir un modo de juego.</p>
+            <p class="lead fw-medium text-break">Entre más preguntas correctas tengas,
+                más puntos sumarás y tu puntuación
+                aparecerá en la parte superior junto con otros jugadores.</p>
+        </div>
+        <div class="container text-center">
+            <h1 class="display-1">Modos de juego:</h1>
+            <div class="d-grid gap-50 d-md-block">
+                <button id="IniciarJuego" class="btn btn-primary" type="button">Iniciar Juego</button>
+                <button id="reset" class="btn btn-primary" type="button">Reset</button>
+            </div>
+        </div>
+    </section>
+    <div class="container mt-5">
+        <section id="pregunta" class="mb-5"></section>
+        <section id="opciones" class="mb-5"></section>
+        <div id="alertas"></div>
+      </div>
+      <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
+</div>
+      
+    <div id="reiniciar-container" class="container-fluid mt-5"></div>
+
+    <section class="container-fluid text-light mt-2 p-4">
+        <h1 class="display-6 border rounded p-2">Ranking de jugadores:</h1>
+    </section>
+    <section class=" container-fluid text-light mt-2 p-4 text-center">
+        <footer class="text-light text-center py-3">
+            <p>Derechos de autor © 2023 Toloza Leonel - 2023</p>
+        </footer>
+    </section>
+</body>
+
+</html>
