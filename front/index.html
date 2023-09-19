@@ -10,8 +10,7 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
-    <script src="javascript/main.js" type="module" defer></script>
-
+    <script src="javascript/metodo.js" type="module" defer></script>
     <title>Integrador</title>
 </head>
 
@@ -35,10 +34,15 @@
                 aparecerá en la parte superior junto con otros jugadores.</p>
         </div>
         <div class="container text-center">
-            <h1 class="display-1">Modos de juego:</h1>
-            <div class="d-grid gap-50 d-md-block">
-                <button id="IniciarJuego" class="btn btn-primary" type="button">Iniciar Juego</button>
-                <button id="reset" class="btn btn-primary" type="button">Reset</button>
+            <h1 class="display-1">Ingrese su nombre:</h1>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="d-grid gap-3">
+                        <input type="text" id="nombre" class="form-control form-control-lg mb-3" placeholder="Nombre">
+                        <button id="iniciarJuego" class="btn btn-primary btn-lg" type="button" disabled>Iniciar
+                            Juego</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -46,11 +50,12 @@
         <section id="pregunta" class="mb-5"></section>
         <section id="opciones" class="mb-5"></section>
         <div id="alertas"></div>
-      </div>
-      <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-  <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
-</div>
-      
+    </div>
+    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0"
+        aria-valuemax="100">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 75%"></div>
+    </div>
+
     <div id="reiniciar-container" class="container-fluid mt-5"></div>
 
     <section class="container-fluid text-light mt-2 p-4">

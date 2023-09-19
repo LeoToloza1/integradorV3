@@ -7,12 +7,10 @@ const app = Express();
 const port = process.env.PORT || 8080;
 const estaticos = path.join(directorio, '../../front');
 //console.log("directorio:"+directorio)
-console.log("RUTA DE ARCHIVOS ESTATICOS:"+estaticos)
+//console.log("RUTA DE ARCHIVOS ESTATICOS:"+estaticos)
 
-// Primero, utiliza el middleware de Express para servir archivos estáticos
 app.use(Express.static(estaticos));
 
-// Luego, define tus rutas, asegúrate de que estas rutas estén después del middleware estático
 app.use('/', router);
 
 
