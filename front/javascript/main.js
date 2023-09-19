@@ -8,28 +8,26 @@ let opcionSeleccionada;
 let respCorrectas = 0;
 let respIncorrectas = 0;
 let preguntaActual = 0;
-export async function recibirDatos() {
+ export async function recibirDatos() {
   try {
     const response = await fetch('/preguntas');
     console.log('Datos cargados');
     datos = await response.json();
-    console.log(datos); // aca llegan las preguntas del servidor
   } catch (error) {
     console.error('Error al cargar datos:', error);
   }
 }
 recibirDatos();
-
 iniciarJuegoButton.addEventListener('click', () => {
   instruccion.style.display = "none"; // ocultar instrucciones
   preguntaElement.classList.add("tarjeta");
   opcionesElement.classList.add("tarjeta");
+ 
   mostrarPreguntaActual()
 });
 
 function mostrarPreguntaActual() {
   const pregunta = datos.preguntas[preguntaActual];
-  //console.log("linea28: "+pregunta.tipo) hasta aca, todo bien
   preguntaElement.innerHTML = `<h2 class="display-2 text-center">${pregunta.texto}</h2>`;
   opcionesElement.innerHTML = '';
   pregunta.opciones.forEach((opcion, i) => {
@@ -54,18 +52,18 @@ function mostrarPreguntaActual() {
 }
 opcionesElement.addEventListener('change', (e) => {
   opcionSeleccionada = e.target;
-  console.log("LA OPCION SELECCIONADA ES: "+opcionSeleccionada.value)
   if (opcionSeleccionada.type === 'radio' && opcionSeleccionada.name === 'respuesta') {
-    validarRespuesta(opcionSeleccionada);
+    const respuestaSeleccionada = opcionSeleccionada.getAttribute('data-respuesta');
+    validarRespuesta(opcionSeleccionada, respuestaSeleccionada);
   }
 });
 
-function validarRespuesta(seleccion) {
+function validarRespuesta(seleccion, respuesta) {
   const alertasContainer = document.getElementById("alertas");
-  const pregunta = datos.preguntas[preguntaActual];
-  const respuestaSeleccionada = seleccion.getAttribute('data-respuesta');
+  const respuestaSeleccionada = seleccion.value.trim().toLowerCase();
+  const respuestaCorrecta = respuesta.trim().toLowerCase();
 
-  if (respuestaSeleccionada === pregunta.respuesta && preguntaActual < datos.preguntas.length) {
+  if (respuestaSeleccionada === respuestaCorrecta && preguntaActual < datos.preguntas.length) {
     respCorrectas++;
     const alertDiv = document.createElement("div");
     alertDiv.classList.add("alert", "alert-primary", "mt-3");
@@ -86,15 +84,10 @@ function validarRespuesta(seleccion) {
       alertDiv.remove();
     }, 1000);
   }
-
   preguntaActual++;
-  if (preguntaActual < datos.preguntas.length) {
-    mostrarPreguntaActual();
-  } else {
-    mostrarPuntaje();
-    console.log("FIN DEL JUEGO BRO");
-  }
+  mostrarPreguntaActual();
 }
+
 
 function mostrarPuntaje() {
   alert('Puntaje: ' + respCorrectas);

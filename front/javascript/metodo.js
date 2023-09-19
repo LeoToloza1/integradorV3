@@ -1,4 +1,4 @@
-import { recibirDatos } from "./main.js";
+import {recibirDatos} from "./main.js"
 const nombreInput = document.getElementById('nombre');
    export const iniciarJuegoButton = document.getElementById('iniciarJuego');
    nombreInput.addEventListener('input', function() {
@@ -11,5 +11,6 @@ const nombreInput = document.getElementById('nombre');
    iniciarJuegoButton.addEventListener('click', function() {
        const nombre = nombreInput.value.trim();
        alert(`¡Bienvenido, ${nombre}! El juego ha comenzado.`);
+       
    });
 
