@@ -4,7 +4,6 @@ const router = Router();
 
 router.get('/', (req, res) => {
     res.send("Hola mundo")
-    console.log("entre a la ruta raiz")
   });
   
   router.get('/preguntas', async (req, res) => {
@@ -17,5 +16,29 @@ router.get('/', (req, res) => {
       res.status(500).json({ error: 'Error al obtener las preguntas' });
     }
 });
-  
-export default router
+
+// Nueva ruta para guardar el nombre
+router.post('guardar-nombre', async (req, res) => {
+  const nombre = req.body.nombre;
+
+  // Guardar el nombre en la base de datos
+
+  const query = `INSERT INTO integrador.jugadores (nombre,tiempo) VALUES ('?','?');`;
+
+  const results = await con.query(query);
+
+  if (results.affectedRows > 0) {
+    res.status(200).send({
+      success: true,
+      message: 'El nombre se guardó correctamente!'
+    });
+  } else {
+    res.status(500).send({
+      success: false,
+      message: 'Ocurrió un error al guardar el nombre'
+    });
+  }
+});
+
+
+export default router;

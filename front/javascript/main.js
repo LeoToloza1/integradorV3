@@ -1,7 +1,11 @@
-const iniciarJuegoButton = document.getElementById("iniciarJuego")
+//const iniciarJuegoButton = document.getElementById("iniciarJuego")
 const instruccion = document.getElementById("instruccion");
 const preguntaElement = document.getElementById("pregunta");
 const opcionesElement = document.getElementById("opciones")
+const principianteButton = document.getElementById('principiante');
+const intermedioButton = document.getElementById('intermedio');
+const dificilButton = document.getElementById('dificil');
+
 let datos = [];
 let respuesta;
 let opcionSeleccionada;
@@ -13,22 +17,30 @@ let preguntaActual = 0;
     const response = await fetch('/preguntas');
     console.log('Datos cargados');
     datos = await response.json();
-    console.log(datos); // aca llegan las preguntas del servidor
+     // aca llegan las preguntas del servidor
   } catch (error) {
     console.error('Error al cargar datos:', error);
   }
 }
 recibirDatos();
-iniciarJuegoButton.addEventListener('click', () => {
+function iniciarJuego() {
   instruccion.style.display = "none"; // ocultar instrucciones
   preguntaElement.classList.add("tarjeta");
   opcionesElement.classList.add("tarjeta");
-  mostrarPreguntaActual()
+  mostrarPreguntaActual();
+}
+principianteButton.addEventListener('click', () => {
+  iniciarJuego();
 });
-
+intermedioButton.addEventListener('click', () => {
+  iniciarJuego();
+});
+dificilButton.addEventListener('click', () => {
+  iniciarJuego();
+});
 function mostrarPreguntaActual() {
   const pregunta = datos.preguntas[preguntaActual];
-  //console.log("linea28: "+pregunta.tipo) hasta aca, todo bien
+ 
   preguntaElement.innerHTML = `<h2 class="display-2 text-center">${pregunta.texto}</h2>`;
   respuesta = pregunta.respuesta;
   opcionesElement.innerHTML = '';
@@ -60,7 +72,7 @@ opcionesElement.addEventListener('input', (event) => {
 
 function validarRespuesta(opcionSeleccionada,respuesta) {
   const alertasContainer = document.getElementById("alertas");
-  console.log(opcionSeleccionada.value + " -> "+ respuesta)
+
   if (opcionSeleccionada.value == respuesta && preguntaActual < datos.preguntas.length) {
     respCorrectas++;
     const alertDiv = document.createElement("div");
