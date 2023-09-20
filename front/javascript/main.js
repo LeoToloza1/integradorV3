@@ -1,28 +1,30 @@
-//const iniciarJuegoButton = document.getElementById("iniciarJuego")
 const instruccion = document.getElementById("instruccion");
 const preguntaElement = document.getElementById("pregunta");
 const opcionesElement = document.getElementById("opciones")
 const principianteButton = document.getElementById('principiante');
 const intermedioButton = document.getElementById('intermedio');
 const dificilButton = document.getElementById('dificil');
-
+import { tiempoAgotado } from "./metodo.js";
 let datos = [];
 let respuesta;
 let opcionSeleccionada;
-let respCorrectas = 0;
+export let respCorrectas = 0;
 let respIncorrectas = 0;
-let preguntaActual = 0;
+export let preguntaActual = 0;
+export let cantidadPreguntas;
  export async function recibirDatos() {
   try {
     const response = await fetch('/preguntas');
     console.log('Datos cargados');
     datos = await response.json();
+    cantidadPreguntas = datos.preguntas.length;
      // aca llegan las preguntas del servidor
   } catch (error) {
     console.error('Error al cargar datos:', error);
   }
 }
 recibirDatos();
+
 function iniciarJuego() {
   instruccion.style.display = "none"; // ocultar instrucciones
   preguntaElement.classList.add("tarjeta");
@@ -40,7 +42,6 @@ dificilButton.addEventListener('click', () => {
 });
 function mostrarPreguntaActual() {
   const pregunta = datos.preguntas[preguntaActual];
- 
   preguntaElement.innerHTML = `<h2 class="display-2 text-center">${pregunta.texto}</h2>`;
   respuesta = pregunta.respuesta;
   opcionesElement.innerHTML = '';
@@ -72,7 +73,6 @@ opcionesElement.addEventListener('input', (event) => {
 
 function validarRespuesta(opcionSeleccionada,respuesta) {
   const alertasContainer = document.getElementById("alertas");
-
   if (opcionSeleccionada.value == respuesta && preguntaActual < datos.preguntas.length) {
     respCorrectas++;
     const alertDiv = document.createElement("div");
@@ -99,6 +99,7 @@ function validarRespuesta(opcionSeleccionada,respuesta) {
     mostrarPreguntaActual();
   } else {
     mostrarPuntaje();
+    tiempoAgotado();
   }
 }
 

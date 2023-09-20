@@ -1,9 +1,18 @@
 import { recibirDatos } from "./main.js";
+import { enviarDatosAlServidor } from "./datos.js";
+
 const nombreInput = document.getElementById('nombre');
 const principianteButton = document.getElementById('principiante');
 const intermedioButton = document.getElementById('intermedio');
 const dificilButton = document.getElementById('dificil');
-
+let tiempoInicio;
+let tiempoTranscurrido;
+let tiempoRestante;
+let juegoEnCurso = false;
+let dificultad;
+import { preguntaActual } from "./main.js";
+import { cantidadPreguntas } from "./main.js"
+import { respCorrectas } from "./main.js";
 function verificarNombre() {
     if (nombreInput.value.trim() !== '') {
         principianteButton.removeAttribute('disabled');
@@ -17,66 +26,100 @@ function verificarNombre() {
 }
 verificarNombre();
 nombreInput.addEventListener('input', verificarNombre);
+
 const nivelesDificultad = {
-    principiante: 75,
-    intermedio: 50, 
-    dificil: 40     
+    principiante: 60,
+    intermedio: 45,
+    dificil: 35
 };
 function iniciarJuegoConDificultad(dificultad) {
+    tiempoInicio = Date.now();
     tiempoRestante = nivelesDificultad[dificultad];
+    juegoEnCurso = true;
     iniciarContador(dificultad);
 }
+
 principianteButton.addEventListener('click', () => {
+    dificultad= "principiante"
     iniciarJuegoConDificultad("principiante");
 });
 intermedioButton.addEventListener('click', () => {
+    dificultad= "intermedio"
     iniciarJuegoConDificultad("intermedio");
 });
 dificilButton.addEventListener('click', () => {
+    dificultad= "dificil"
     iniciarJuegoConDificultad("dificil");
 });
 const progressBarFill = document.getElementById("barraProgreso");
-let tiempoRestante;
+
 function iniciarContador(nivelDificultad) {
     const intervalo = setInterval(() => {
-        if (tiempoRestante <= 0) {
+        if (!juegoEnCurso) {
             clearInterval(intervalo);
-            tiempoAgotado();
+        } else if (tiempoRestante <= 0 || preguntaActual >= cantidadPreguntas) {
+            clearInterval(intervalo);
         } else {
             tiempoRestante--;
             const porcentaje = (tiempoRestante / nivelesDificultad[nivelDificultad]) * 100;
             progressBarFill.style.width = porcentaje + "%";
         }
-    }, 1000);
+    }, 500);
 }
-function tiempoAgotado() {
+
+export function tiempoAgotado() {
     const nombre = nombreInput.value.trim();
-    alert(`Se acabó el tiempo, ${nombre}`);
+    const tiempoFin = Date.now();
+    tiempoTranscurrido = (tiempoFin - tiempoInicio) / 1000;
+    alert(`Se acabó el tiempo, ${nombre}. Tiempo transcurrido: ${tiempoTranscurrido} segundos`);
+    enviarDatosAlServidor(nombre,respCorrectas, tiempoTranscurrido,dificultad);
 }
-const columnas = document.querySelectorAll("th");
-columnas.forEach((columna) => {
+import { jugadores } from "./datos.js";
+const columnas = document.querySelectorAll(".sortable");
+const tabla = document.querySelector("table");
+let ordenColumna = Array.from(columnas).fill(null);
+
+columnas.forEach((columna, indiceColumna) => {
     columna.addEventListener("click", (event) => {
-        const indiceColumna = columnas.indexOf(columna);
-        if (ranking.sort) {
-            ranking.sort((a, b) => {
-                return a[indiceColumna] - b[indiceColumna];
-            });
+        ordenColumna[indiceColumna] = !ordenColumna[indiceColumna];
+        columnas.forEach((col) => col.classList.remove("asc", "desc"));
+        if (ordenColumna[indiceColumna]) {
+            columna.classList.add("asc");
         } else {
-            ranking = Array.from(ranking);
-            ranking.sort((a, b) => {
-                return a[indiceColumna] - b[indiceColumna];
-            });
+            columna.classList.add("desc");
         }
-        const tbody = document.querySelector("#ranking");
-        tbody.innerHTML = "";
-        for (const jugador of ranking) {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td>${jugador.posicion}</td>
-                <td>${jugador.nombre}</td>
-                <td>${jugador.tiempo}</td>
-            `;
-            tbody.appendChild(tr);
-        }
+        jugadores.sort((a, b) => {
+            if (ordenColumna[indiceColumna]) {
+                return a[ordenColumna].localeCompare(b[ordenColumna]);
+            } else {
+                return b[ordenColumna].localeCompare(a[ordenColumna]);
+            }
+        });
+        renderizarTabla();
     });
 });
+function renderizarTabla() {
+    const tbody = document.querySelector("#ranking");
+    tbody.innerHTML = "";
+    jugadores
+        .filter(jugador => jugador && jugador.tiempo)
+        .sort((a, b) => {
+            if (ordenColumna[indiceColumna]) {
+                return a.tiempo.localeCompare(b.tiempo);
+            } else {
+                return b.tiempo.localeCompare(a.tiempo);
+            }
+        })
+        .forEach((jugador, index) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${jugador.nombre}</td>
+                <td>${jugador.puntaje}</td>
+                <td>${jugador.tiempo}</td>
+                <td>${jugador.dificultad}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+}
+renderizarTabla();

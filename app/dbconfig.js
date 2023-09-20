@@ -6,4 +6,4 @@ const config={
     database: 'integrador'
 }
 
-export const con = await mysql.createConnection(config);
+export const conn = await mysql.createConnection(config);
