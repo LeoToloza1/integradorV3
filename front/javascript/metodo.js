@@ -59,13 +59,17 @@ function iniciarContador(nivelDificultad) {
             clearInterval(intervalo);
         } else if (tiempoRestante <= 0 || preguntaActual >= cantidadPreguntas) {
             clearInterval(intervalo);
+            if (tiempoRestante <= 0) {
+                tiempoAgotado();
+            }
         } else {
             tiempoRestante--;
             const porcentaje = (tiempoRestante / nivelesDificultad[nivelDificultad]) * 100;
             progressBarFill.style.width = porcentaje + "%";
         }
-    }, 500);
+    }, 1000);
 }
+
 
 export function tiempoAgotado() {
     const nombre = nombreInput.value.trim();
@@ -73,77 +77,5 @@ export function tiempoAgotado() {
     tiempoTranscurrido = (tiempoFin - tiempoInicio) / 1000;
     alert(`Se acabó el tiempo, ${nombre}. Tiempo transcurrido: ${tiempoTranscurrido} segundos`);
     enviarDatosAlServidor(nombre,respCorrectas, tiempoTranscurrido,dificultad);
+    juegoEnCurso = false;
 }
-import { jugadores } from "./datos.js";
-
-// Función para ordenar la tabla por una columna específica
-document.addEventListener('DOMContentLoaded', function () {
- 
-  ordenarTabla(2);
-});
-
-   
-function ordenarTabla(columna) {
-    const tabla = document.getElementById('tablaRanking');
-    const tbody = tabla.querySelector('tbody');
-    const filas = Array.from(tbody.querySelectorAll('tr'));
-  
-    // Ordenar las filas en función del valor de la columna seleccionada
-    filas.sort((filaA, filaB) => {
-      const valorA = filaA.cells[columna].textContent.trim();
-      const valorB = filaB.cells[columna].textContent.trim();
-      return valorA.localeCompare(valorB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-  
-    // Vaciar el cuerpo de la tabla
-    while (tbody.firstChild) {
-      tbody.removeChild(tbody.firstChild);
-    }
-  
-    // Volver a agregar las filas ordenadas
-    filas.forEach(fila => {
-      tbody.appendChild(fila);
-    });
-  }
-
-
-
-
-
-/*
-const columnas = document.querySelectorAll(".sortable");
-let ordenColumna = Array.from(columnas).fill(null);
-let indiceColumna;
-columnas.forEach((columna, indiceColumna) => {
-    columna.addEventListener("click", (event) => {
-        ordenColumna[indiceColumna] = !ordenColumna[indiceColumna];
-        columnas.forEach((col) => col.classList.remove("asc", "desc"));
-        if (ordenColumna[indiceColumna]) {
-            columna.classList.add("asc");
-        } else {
-            columna.classList.add("desc");
-        }
-        renderizarTabla();
-    });
-});
-function renderizarTabla() {
-    const tbody = document.querySelector("#ranking");
-    const filas = Array.from(tbody.querySelectorAll("tr"));
-    filas.sort((filaA, filaB) => {
-        const valorA = filaA.children[indiceColumna].textContent;
-        const valorB = filaB.children[indiceColumna].textContent;
-        if (ordenColumna[indiceColumna]) {
-            return valorA.localeCompare(valorB);
-        } else {
-            return valorB.localeCompare(valorA);
-        }
-    });
-    filas.forEach((fila) => tbody.removeChild(fila));
-    filas.forEach((fila, index) => {
-        tbody.appendChild(fila);
-        fila.querySelector("td:first-child").textContent = index + 1;
-    });
-}
-
-renderizarTabla();
-*/
