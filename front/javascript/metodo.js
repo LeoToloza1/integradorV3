@@ -75,10 +75,45 @@ export function tiempoAgotado() {
     enviarDatosAlServidor(nombre,respCorrectas, tiempoTranscurrido,dificultad);
 }
 import { jugadores } from "./datos.js";
-const columnas = document.querySelectorAll(".sortable");
-const tabla = document.querySelector("table");
-let ordenColumna = Array.from(columnas).fill(null);
 
+// Función para ordenar la tabla por una columna específica
+document.addEventListener('DOMContentLoaded', function () {
+ 
+  ordenarTabla(2);
+});
+
+   
+function ordenarTabla(columna) {
+    const tabla = document.getElementById('tablaRanking');
+    const tbody = tabla.querySelector('tbody');
+    const filas = Array.from(tbody.querySelectorAll('tr'));
+  
+    // Ordenar las filas en función del valor de la columna seleccionada
+    filas.sort((filaA, filaB) => {
+      const valorA = filaA.cells[columna].textContent.trim();
+      const valorB = filaB.cells[columna].textContent.trim();
+      return valorA.localeCompare(valorB, undefined, { numeric: true, sensitivity: 'base' });
+    });
+  
+    // Vaciar el cuerpo de la tabla
+    while (tbody.firstChild) {
+      tbody.removeChild(tbody.firstChild);
+    }
+  
+    // Volver a agregar las filas ordenadas
+    filas.forEach(fila => {
+      tbody.appendChild(fila);
+    });
+  }
+
+
+
+
+
+/*
+const columnas = document.querySelectorAll(".sortable");
+let ordenColumna = Array.from(columnas).fill(null);
+let indiceColumna;
 columnas.forEach((columna, indiceColumna) => {
     columna.addEventListener("click", (event) => {
         ordenColumna[indiceColumna] = !ordenColumna[indiceColumna];
@@ -88,38 +123,27 @@ columnas.forEach((columna, indiceColumna) => {
         } else {
             columna.classList.add("desc");
         }
-        jugadores.sort((a, b) => {
-            if (ordenColumna[indiceColumna]) {
-                return a[ordenColumna].localeCompare(b[ordenColumna]);
-            } else {
-                return b[ordenColumna].localeCompare(a[ordenColumna]);
-            }
-        });
         renderizarTabla();
     });
 });
 function renderizarTabla() {
     const tbody = document.querySelector("#ranking");
-    tbody.innerHTML = "";
-    jugadores
-        .filter(jugador => jugador && jugador.tiempo)
-        .sort((a, b) => {
-            if (ordenColumna[indiceColumna]) {
-                return a.tiempo.localeCompare(b.tiempo);
-            } else {
-                return b.tiempo.localeCompare(a.tiempo);
-            }
-        })
-        .forEach((jugador, index) => {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${jugador.nombre}</td>
-                <td>${jugador.puntaje}</td>
-                <td>${jugador.tiempo}</td>
-                <td>${jugador.dificultad}</td>
-            `;
-            tbody.appendChild(tr);
-        });
+    const filas = Array.from(tbody.querySelectorAll("tr"));
+    filas.sort((filaA, filaB) => {
+        const valorA = filaA.children[indiceColumna].textContent;
+        const valorB = filaB.children[indiceColumna].textContent;
+        if (ordenColumna[indiceColumna]) {
+            return valorA.localeCompare(valorB);
+        } else {
+            return valorB.localeCompare(valorA);
+        }
+    });
+    filas.forEach((fila) => tbody.removeChild(fila));
+    filas.forEach((fila, index) => {
+        tbody.appendChild(fila);
+        fila.querySelector("td:first-child").textContent = index + 1;
+    });
 }
+
 renderizarTabla();
+*/

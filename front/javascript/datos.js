@@ -22,7 +22,7 @@ export async function enviarDatosAlServidor(nombre,puntaje,tiempoTranscurrido,di
       console.error('Error de red:', error);
     }
   }
-  export let jugadores=[];
+  
   document.addEventListener('DOMContentLoaded', () => {
     const consultarRankingBtn = document.getElementById('consultarRanking');
     const rankingTbody = document.getElementById('ranking');
@@ -52,4 +52,4 @@ export async function enviarDatosAlServidor(nombre,puntaje,tiempoTranscurrido,di
       }
     });
   });
-  
+  export let jugadores=[];

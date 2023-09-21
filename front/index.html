@@ -38,7 +38,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="d-grid gap-3">
-                        <input type="text" id="nombre" class="form-control form-control-lg mb-3" placeholder="Nombre">  
+                        <input type="text" id="nombre" class="form-control form-control-lg mb-3" placeholder="Nombre">
                         <h1 class="display-6">Selecione la dificultad:</h1>
                         <button id="principiante" class="btn btn-primary btn-lg dificultad-button">Principiante</button>
                         <button id="intermedio" class="btn btn-primary btn-lg dificultad-button">Intermedio</button>
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        
+
     </section>
     <div class="container mt-5">
         <section id="pregunta" class="mb-5"></section>
@@ -61,22 +61,23 @@
     </div>
     <section class="container-fluid text-light mt-2 p-4">
         <h1 class="display-6 border rounded p-2">Ranking de jugadores:</h1>
-        <table class="table table-striped table-bordered">
+        <table id="tablaRanking" class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th class="sortable">Posición</th>
-                    <th class="sortable">Nombre</th>
-                    <th class="sortable">Puntaje</th>
-                    <th class="sortable">Tiempo</th>
-                    <th class="sortable">Dificultad</th>
+                    <th onclick="ordenarTabla(0)">Posición</th>
+                    <th onclick="ordenarTabla(1)">Nombre</th>
+                    <th onclick="ordenarTabla(2)">Puntaje</th>
+                    <th onclick="ordenarTabla(3)">Tiempo</th>
+                    <th onclick="ordenarTabla(4)">Dificultad</th>
                 </tr>
             </thead>
+
             <tbody id="ranking"></tbody>
         </table>
-        
+
         <button type="button" class="btn btn-primary" id="consultarRanking">Consultar ranking</button>
     </section>
-    
+
 
     <section class=" container-fluid text-light mt-2 p-4 text-center">
         <footer class="text-light text-center py-3">
