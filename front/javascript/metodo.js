@@ -11,9 +11,9 @@ let tiempoRestante;
 let juegoEnCurso = false;
 let dificultad;
 const nivelesDificultad = {
-    principiante: 60,
-    intermedio: 45,
-    dificil: 35
+    principiante: 50,
+    intermedio: 40,
+    dificil: 30
 };
 import { preguntaActual } from "./main.js";
 import { cantidadPreguntas } from "./main.js"
@@ -63,10 +63,10 @@ function iniciarContador(nivelDificultad) {
                 tiempoAgotado();
                 activarConfeti();
             }
-        } else if (tiempoRestante <= 0 || preguntaActual >= cantidadPreguntas) {
+        } else if (tiempoRestante <= 0 || preguntaActual >= cantidadPreguntas || tiempoTranscurrido >= nivelesDificultad[nivelDificultad]) {
             clearInterval(intervalo);
             if (tiempoRestante <= 0) {
-                tiempoAgotadoFlag = true; // Marcar que se agotó el tiempo
+                tiempoAgotadoFlag = true;
                 tiempoAgotado();
             } else {
                 activarConfeti();
@@ -76,8 +76,13 @@ function iniciarContador(nivelDificultad) {
             const porcentaje = (tiempoRestante / nivelesDificultad[nivelDificultad]) * 100;
             progressBarFill.style.width = porcentaje + "%";
         }
+        if (tiempoRestante <= 0) {
+            const reiniciarJuegoButton = document.getElementById('reiniciarJuego');
+            reiniciarJuegoButton.style.display = "block";
+        }
     }, 1000);
 }
+
 
 export function tiempoAgotado() {
     const nombre = nombreInput.value.trim();

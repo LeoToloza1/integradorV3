@@ -109,6 +109,7 @@ function mostrarPuntaje() {
   const reiniciarJuegoButton = document.getElementById('reiniciarJuego');
   reiniciarJuegoButton.style.display = "block";
   reiniciarJuegoButton.addEventListener('click', reiniciarJuego);
+  tiempoAgotado();
 }
 function reiniciarJuego() {
   respCorrectas = 0;
