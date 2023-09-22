@@ -102,7 +102,20 @@ function validarRespuesta(opcionSeleccionada,respuesta) {
     tiempoAgotado();
   }
 }
-
 function mostrarPuntaje() {
   alert('Puntaje: ' + respCorrectas);
+  preguntaElement.style.display = "none";
+  opcionesElement.style.display = "none";
+  const reiniciarJuegoButton = document.getElementById('reiniciarJuego');
+  reiniciarJuegoButton.style.display = "block";
+  reiniciarJuegoButton.addEventListener('click', reiniciarJuego);
+}
+function reiniciarJuego() {
+  respCorrectas = 0;
+  respIncorrectas = 0;
+  preguntaActual = 0;
+  preguntaElement.style.display = "block";
+  opcionesElement.style.display = "block";
+  const reiniciarJuegoButton = document.getElementById('reiniciarJuego');
+  reiniciarJuegoButton.style.display = "none";
 }

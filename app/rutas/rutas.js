@@ -24,7 +24,7 @@ router.post('/guardarDatos', async (req, res) => {
     const puntaje = req.body.puntaje;
     const tiempo = req.body.tiempoTranscurrido;
     const dificultad = req.body.dificultad;
-    const query = `INSERT INTO integrador.jugadores (nombre, tiempo, puntaje, dificultad) VALUES (?, ?, ?, ?)`;
+    const query = `INSERT INTO jugadores (nombre, tiempo, puntaje, dificultad) VALUES (?, ?, ?, ?)`;
     const results = await conn.query(query, [nombre, tiempo, puntaje, dificultad]);
     if (results.affectedRows > 0) {
       res.status(200).json({
@@ -48,7 +48,7 @@ router.post('/guardarDatos', async (req, res) => {
 // ruta para obtener los datos de los jugadores
 router.get('/obtenerJugadores', async (req, res) => {
   try {
-    const query = 'SELECT * FROM integrador.jugadores';
+    const query = `SELECT nombre,puntaje,tiempo,dificultad FROM jugadores ORDER BY 'puntaje' DESC, 'tiempo' ASC LIMIT 20;`;
     const results = await conn.query(query);
     res.status(200).json({ success: true, jugadores: results });
   } catch (error) {

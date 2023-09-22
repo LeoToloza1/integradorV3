@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/confetti-js/dist/index.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
@@ -14,7 +15,7 @@
     <title>Integrador</title>
 </head>
 
-<body class="container-fluid">
+<body id="body" class="container-fluid">
     <section class="container-fluid text-light mt-2 p-4 text-center">
         <h1>Juego de preguntas y respuetas</h1>
         <h3 class="text-center">¡Bienvenido a este divertido Juego!</h3>
@@ -23,15 +24,17 @@
         <div class="container-fluid mt-5">
 
             <h1 class="display-1 text-center border rounded p-2">Instrucciones</h1>
-            <p class="lead fw-medium">El juego se basa en un juego de preguntas y
-                respuestas.</p>
-            <p class="lead fw-medium">Para jugar, solo debes contestar las
-                preguntas haciendo click en las opciones correspondientes.</p>
-            <p class="lead fw-medium">Te tocarán preguntas al azar o
-                puedes elegir un modo de juego.</p>
+            <p class="lead fw-medium">Para iniciar el juego, solo debe colocar su nombre y habilitará
+                los 3 niveles de dificultad.</p>
+            <p class="lead fw-medium">El objetivo es contestar 10
+                preguntas haciendo click en las opciones que apareceran debajo de cada pregunta.</p>
+            <p class="lead fw-medium">Te tocarán preguntas al azar entre capitales de paises o banderas,
+                puedes elegir la dificultad del juego.</p>
+            <p class="lead fw-medium text-break">Los niveles de dificultad harán que la barra de tiempo
+                disminuya mucho mas rapido, segun el nivel seleccionado.</p>    
             <p class="lead fw-medium text-break">Entre más preguntas correctas tengas,
                 más puntos sumarás y tu puntuación
-                aparecerá en la parte superior junto con otros jugadores.</p>
+                aparecerá en la parte inferior junto con otros jugadores.</p>
         </div>
         <div class="container text-center">
             <h1 class="display-1">Ingrese su nombre:</h1>
@@ -47,11 +50,12 @@
                 </div>
             </div>
         </div>
-
     </section>
     <div class="container mt-5">
+        <a href="/"><button id="reiniciarJuego" class="btn btn-primary btn-lg" style="display: none;">Reiniciar Juego</button></a>
         <section id="pregunta" class="mb-5"></section>
         <section id="opciones" class="mb-5"></section>
+        <canvas id="confeti-canvas"></canvas>
         <div id="alertas"></div>
     </div>
     <div class="progress" id="progress-bar" style="height: 30px;">
@@ -60,18 +64,19 @@
     </div>
     <section class="container-fluid text-light mt-2 p-4">
         <h1 class="display-6 border rounded p-2">Ranking de jugadores:</h1>
+        <p class="lead fw-medium text-break"> Ranking de los mejores puntajes y los menores tiempos</p>
         <table id="tablaRanking" class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th onclick="ordenarTabla(0)">Posición</th>
-                    <th onclick="ordenarTabla(1)">Nombre</th>
-                    <th onclick="ordenarTabla(2)">Puntaje</th>
-                    <th onclick="ordenarTabla(3)">Tiempo</th>
-                    <th onclick="ordenarTabla(4)">Dificultad</th>
+                    <th>Nombre</th>
+                    <th>Puntaje</th>
+                    <th>Tiempo</th>
+                    <th>Dificultad</th>
                 </tr>
             </thead>
             <tbody id="ranking"></tbody>
         </table>
+        
         <button type="button" class="btn btn-primary" id="consultarRanking">Consultar ranking</button>
     </section>
     <section class=" container-fluid text-light mt-2 p-4 text-center">
@@ -80,4 +85,5 @@
         </footer>
     </section>
 </body>
+
 </html>

@@ -46,3 +46,12 @@ body {
 .custom-radio:hover {
   transform: scale(1.070);
 }
+
+#confeti-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* Ancho del canvas al 100% del contenedor */
+  height: 100%; /* Alto del canvas al 100% del contenedor */
+  pointer-events: none; /* Evita que el canvas intercepte eventos del ratón */
+}

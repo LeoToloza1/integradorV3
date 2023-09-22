@@ -36,7 +36,6 @@ export async function enviarDatosAlServidor(nombre,puntaje,tiempoTranscurrido,di
           jugadores.forEach((jugador, index) => {
             const fila = document.createElement('tr');
             fila.innerHTML = `
-              <td>${index + 1}</td>
               <td>${jugador.nombre}</td>
               <td>${jugador.puntaje}</td>
               <td>${jugador.tiempo} segundos</td>
