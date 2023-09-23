@@ -1,6 +1,6 @@
 import { mezclarOpciones, iniciarJuego, mostrarPuntaje } from "./main.mjs";
 import { obtenerPreguntas, preguntasAleatorias } from "./capitales.mjs";
-
+import fetch from "node-fetch;"
 const paisesUrl = "https://restcountries.com/v3.1/all";
 export let datos = [];
 
