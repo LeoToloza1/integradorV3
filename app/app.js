@@ -2,6 +2,7 @@ import  Express from "express";
 import router from "./rutas/rutas.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
+import cors from "cors";
 const directorio = fileURLToPath(import.meta.url);
 const app = Express();
 const port = process.env.PORT || 8080;
@@ -12,7 +13,7 @@ app.use(Express.static(estaticos));
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true })); 
 app.use('/', router);
-
+app.use(cors());
 
 app.listen(port,()=>{
     console.log(`Corriendo en el puerto: ${port}`);
