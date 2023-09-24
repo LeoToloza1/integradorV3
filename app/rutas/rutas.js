@@ -48,8 +48,7 @@ router.post('/guardarDatos', async (req, res) => {
 // ruta para obtener los datos de los jugadores
 router.get('/obtenerJugadores', async (req, res) => {
   try {
-    const query = `SELECT nombre, puntaje, tiempo, dificultad FROM jugadores ORDER BY puntaje DESC, tiempo ASC LIMIT 10;
-    `;
+    const query = `SELECT nombre,puntaje,tiempo,dificultad FROM jugadores ORDER BY 'puntaje' DESC, 'tiempo' ASC LIMIT 20;`;
     const results = await conn.query(query);
     res.status(200).json({ success: true, jugadores: results });
   } catch (error) {
